@@ -1,0 +1,26 @@
+package uk.fls.h2n0.main;
+
+import fls.engine.main.Init;
+import fls.engine.main.input.Input;
+import uk.fls.h2n0.main.screens.TitleScreen;
+
+@SuppressWarnings("serial")
+public class DnD extends Init{
+
+	public static int w = 200;
+	public static int h = 300;
+	public static int s = 2;
+	
+	public DnD(){
+		super("D&D Compainion", w * s, h * s);
+		useCustomBufferedImage(w, h, false);
+		setInput(new Input(this, Input.MOUSE, Input.KEYS));
+		setScreen(new TitleScreen());
+		skipInit();
+	}
+	
+	
+	public static void main(String[] args){
+		new DnD().start();
+	}
+}
