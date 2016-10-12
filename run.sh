@@ -1,1 +1,0 @@
-~/Documents/Electron/./electron ./
