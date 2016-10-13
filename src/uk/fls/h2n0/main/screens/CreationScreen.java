@@ -9,6 +9,9 @@ import uk.fls.h2n0.main.util.Font;
 import uk.fls.h2n0.main.util.UI;
 import uk.fls.h2n0.main.util.gui.Button;
 import uk.fls.h2n0.main.characters.Character;
+import uk.fls.h2n0.main.characters.DwarfRace;
+import uk.fls.h2n0.main.characters.ElfRace;
+import uk.fls.h2n0.main.characters.HumanRace;
 
 public class CreationScreen extends Screen {
 
@@ -39,9 +42,9 @@ public class CreationScreen extends Screen {
 		this.mouse.setPos(this.input.mouse.getX() / DnD.s, this.input.mouse.getY()/ DnD.s);
 		this.ui.update(this.mouse.getIX(), this.mouse.getIY(), this.input.leftMouseButton.justClicked());
 		if(this.input.isKeyPressed(this.input.a)){
-			prev();
+			prev(1);
 		}else if(this.input.isKeyPressed(this.input.d)){
-			next();
+			next(1);
 		}
 		
 		
@@ -54,16 +57,21 @@ public class CreationScreen extends Screen {
 		
 		if(this.step == 0){//Race selection
 			if(((Button)this.ui.getCompByID("DW")).clicked){//Dwarf
-				next();
+				this.chac.setRace(new DwarfRace());
+				next(1);
 			}else if(((Button)this.ui.getCompByID("EL")).clicked){//Elf
-				next();
+				this.chac.setRace(new ElfRace());
+				next(1);
 			}else if(((Button)this.ui.getCompByID("HU")).clicked){//Human
-				next();
-				next();
+				this.chac.setRace(new HumanRace());
+				next(2);
 				// 2 steps because no sub race
 			}else if(((Button)this.ui.getCompByID("HA")).clicked){//Halfling
-				next();
+				this.chac.setRace(new HaflingRace());
+				next(1);
 			}
+		}else if(this.step == 1){// Subrace selection
+			
 		}
 	}
 
@@ -78,16 +86,23 @@ public class CreationScreen extends Screen {
 		if(this.step == 0){//Select race
 			String words = "pick a race";
 			Font.instace.draw(r, words, (DnD.w-(words.length()*7))/2, 56);
+		}else if(this.step == 1){//Seleceting subrace
+			String words = "pick a subrace of " + this.chac.getRace().getName();
+			Font.instace.draw(r, words, (DnD.w-(words.length()*7))/2, 56);
 		}
 	}
 	
-	public void next(){
-		this.step ++;
+	public void next(int val){
+		this.step += val;
 		setupStep();
 	}
 	
-	public void prev(){
-		this.step--;
+	public void prev(int val){
+		this.step -= val;
+		if(this.chac.getRace() instanceof HumanRace && this.step == 1){
+			this.step--;
+		}
+		
 		if(this.step < 0)this.step = 0;
 		setupStep();
 	}
@@ -95,11 +110,6 @@ public class CreationScreen extends Screen {
 	public void setupStep(){
 		this.ui.clear();
 		if(this.step == 0){//Chose a race
-			
-			//Dwarf
-			//Elf
-			//Human
-			//Halfing
 			int step = 24;
 			int yo = 80;
 			
@@ -109,6 +119,16 @@ public class CreationScreen extends Screen {
 				int xo = (DnD.w - (name.length()*8))/2;
 				System.out.println(name + ":" + name.substring(0,2));
 				this.ui.add(new Button(name.substring(0,2),name, xo, yo + step * i));
+			}
+		}else if(this.step == 1){//Chose a subrace
+			int step = 24;
+			int yo = 80;
+
+			String[] races = this.chac.getRace().getSubracesNames();
+			for(int i = 0; i < races.length; i++){
+				String name = races[i].toUpperCase();
+				int xo = (DnD.w - (name.length()*8))/2;
+				this.ui.add(new Button("RC"+i,name, xo, yo + step * i));
 			}
 		}
 		this.inputdelay = 30;
