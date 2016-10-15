@@ -9,9 +9,10 @@ import uk.fls.h2n0.main.util.Font;
 import uk.fls.h2n0.main.util.UI;
 import uk.fls.h2n0.main.util.gui.Button;
 import uk.fls.h2n0.main.characters.Character;
-import uk.fls.h2n0.main.characters.DwarfRace;
-import uk.fls.h2n0.main.characters.ElfRace;
-import uk.fls.h2n0.main.characters.HumanRace;
+import uk.fls.h2n0.main.characters.race.DwarfRace;
+import uk.fls.h2n0.main.characters.race.ElfRace;
+import uk.fls.h2n0.main.characters.race.HaflingRace;
+import uk.fls.h2n0.main.characters.race.HumanRace;
 
 public class CreationScreen extends Screen {
 
@@ -42,7 +43,7 @@ public class CreationScreen extends Screen {
 		this.mouse.setPos(this.input.mouse.getX() / DnD.s, this.input.mouse.getY()/ DnD.s);
 		this.ui.update(this.mouse.getIX(), this.mouse.getIY(), this.input.leftMouseButton.justClicked());
 		if(this.input.isKeyPressed(this.input.a)){
-			prev(1);
+			prev(999);
 		}else if(this.input.isKeyPressed(this.input.d)){
 			next(1);
 		}
@@ -71,7 +72,15 @@ public class CreationScreen extends Screen {
 				next(1);
 			}
 		}else if(this.step == 1){// Subrace selection
-			
+			for(int i = 0; i < 2; i++){
+				Button btn = ((Button)this.ui.getCompByID("RC"+i));
+				if(btn == null)continue;
+				if(btn.clicked){
+					this.chac.setRace(this.chac.getRace().getSubraces()[i]);
+					next(1);
+					break;
+				}
+			}
 		}
 	}
 
@@ -130,6 +139,8 @@ public class CreationScreen extends Screen {
 				int xo = (DnD.w - (name.length()*8))/2;
 				this.ui.add(new Button("RC"+i,name, xo, yo + step * i));
 			}
+		}else if(this.step == 2){
+			this.chac.getStats().print();
 		}
 		this.inputdelay = 30;
 	}

@@ -28,7 +28,6 @@ public class TitleScreen extends Screen {
 		int yo = 8 * 16;
 		this.ui.add(new Button("NC", "New Character", 47, yo));
 		
-		
 		String[] files = FileIO.instance.listFiles(FileIO.path+"/chars");
 		if(files != null){
 			this.ui.add(new Button("LC", "Load Character", 43, yo + 24));

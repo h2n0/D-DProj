@@ -22,5 +22,11 @@ public class DnD extends Init{
 	
 	public static void main(String[] args){
 		new DnD().start();
+		
+		//TODO
+		//1. Add classes
+		//2. Apply class bonuses to stats
+		//3. Flag stats as proficient
+		//4. Roll ability scores and get player to add them where they want (Drag and drop GUI?)
 	}
 }

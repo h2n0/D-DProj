@@ -1,11 +1,15 @@
-package uk.fls.h2n0.main.characters;
+package uk.fls.h2n0.main.characters.race;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uk.fls.h2n0.main.characters.stats.StatsModifier;
 
 public class Race {
 	
 	protected String name;
 	protected Race[] subraces;
 	protected Race parent;
-	
 	protected int minAge;
 	protected int maxAge;
 
@@ -14,8 +18,11 @@ public class Race {
 	
 	protected int speed;
 	
+	protected List<StatsModifier> statMods;
+	
 	public Race(String name){
 		this.name = name;
+		this.statMods = new ArrayList<StatsModifier>();
 	}
 	
 	public String getName(){
@@ -32,5 +39,14 @@ public class Race {
 			res[i] = this.subraces[i].name;
 		}
 		return res;
+	}
+	
+	public List<StatsModifier> getMods(){
+		return this.statMods;
+	}
+	
+	protected void setParent(Race p){
+		this.parent = p;
+		this.statMods.addAll(p.getMods());
 	}
 }
