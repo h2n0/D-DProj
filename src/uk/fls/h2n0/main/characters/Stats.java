@@ -7,6 +7,8 @@ public class Stats {
 	private int xp;
 	private int level;
 	private int proficiencyBonus;
+	private int hp;
+	private int maxHp;
 	
 	private int strength;
 	private int dexterity;
@@ -16,6 +18,11 @@ public class Stats {
 	private int consitution;
 	
 	private int[] xpAmts;
+	
+	private boolean dead;
+	private boolean unconcious;
+	private int successfulSaves;
+	private int failedSaves;
 	
 	public Stats(){
 		this.xp = 0;
@@ -87,13 +94,17 @@ public class Stats {
 		return this.consitution;
 	}
 	
+	public int getLevel(){
+		return this.level;
+	}
+	
 	public void print(){
-		System.out.println("STR: " + getStrength());
-		System.out.println("DEX: " + getDexterity());
-		System.out.println("WIS: " + getWisdom());
-		System.out.println("CHA: " + getCharisma());
-		System.out.println("INT: " + getIntelligence());
-		System.out.println("CON: " + getConstitution());
+		System.out.println("STR: " + getStrength() + " (" + getBonus(getStrength()) + ")");
+		System.out.println("DEX: " + getDexterity() + " (" + getBonus(getDexterity()) + ")");
+		System.out.println("WIS: " + getWisdom() + " (" + getBonus(getWisdom()) + ")");
+		System.out.println("CHA: " + getCharisma() + " (" + getBonus(getCharisma()) + ")");
+		System.out.println("INT: " + getIntelligence() + " (" + getBonus(getIntelligence()) + ")");
+		System.out.println("CON: " + getConstitution() + " (" + getBonus(getConstitution()) + ")");
 	}
 	
 	public boolean addXP(int amt){
@@ -104,5 +115,48 @@ public class Stats {
 			return true;
 		}
 		return false;
+	}
+	
+	public void setMaxHp(String dice){
+		String num = dice.substring(dice.indexOf("d")+1);
+		int hp = Integer.parseInt(num) + this.getConstitution();
+		this.maxHp = hp;
+	}
+	
+	public void setMaxHp(int newMax){
+		this.maxHp = newMax;
+	}
+	
+	public int getMaxHp(){
+		return this.maxHp;
+	}
+	
+	public void dmg(int amt){
+		if(this.hp - amt < 0){
+			this.unconcious = true;
+			if(this.hp - amt <= this.maxHp){
+				this.dead = true;
+			}
+			this.hp = 0;
+		}
+	}
+	
+	public void heal(int amt){
+		this.hp += amt;
+		if(this.hp > this.maxHp)this.hp = this.maxHp;
+	}
+	
+	public void successfulSave(){
+		if(++this.successfulSaves == 3){
+			this.successfulSaves = 0;
+			this.failedSaves = 0;
+		}
+	}
+	
+	public void failSave(){
+		if(++this.failedSaves == 3){
+			this.successfulSaves = 0;
+			this.failedSaves = 0;
+		}
 	}
 }
