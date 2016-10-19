@@ -7,6 +7,7 @@ import fls.engine.main.screen.Screen;
 import fls.engine.main.util.Point;
 import fls.engine.main.util.Renderer;
 import uk.fls.h2n0.main.DnD;
+import uk.fls.h2n0.main.util.Dice;
 import uk.fls.h2n0.main.util.Font;
 import uk.fls.h2n0.main.util.UI;
 import uk.fls.h2n0.main.util.gui.Button;
@@ -28,7 +29,6 @@ public class TitleScreen extends Screen {
 		int yo = 8 * 16;
 		this.ui.add(new Button("NC", "New Character", 47, yo));
 		
-		
 		String[] files = FileIO.instance.listFiles(FileIO.path+"/chars");
 		if(files != null){
 			this.ui.add(new Button("LC", "Load Character", 43, yo + 24));
@@ -42,6 +42,7 @@ public class TitleScreen extends Screen {
 		this.ui.update(this.mouse.getIX(), this.mouse.getIY(), this.input.leftMouseButton.justClicked());
 		
 		if(((Button)this.ui.getCompByID("NC")).clicked){
+			Dice.rollDice("3d4");
 			setScreen(new CreationScreen());
 		}
 		
@@ -55,7 +56,6 @@ public class TitleScreen extends Screen {
 	@Override
 	public void render(Graphics g) {
 		r.fill(this.bgColor);
-		r.setPixel(this.mouse.getIX(), this.mouse.getIY(), 255 << 8);
 		
 		
 		this.ui.render();

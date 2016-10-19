@@ -22,5 +22,12 @@ public class DnD extends Init{
 	
 	public static void main(String[] args){
 		new DnD().start();
+		
+		//TODO
+		//1. Apply class bonuses to stats
+		//2. Flag stats as proficient
+		//3. Roll ability scores and get player to add them where they want (Drag and drop GUI?)
+		//4. Add success and failur rolls when the player's hp drops to 0
+		//5. Add outright death
 	}
 }
