@@ -2,11 +2,14 @@ package uk.fls.h2n0.main.screens;
 
 import java.awt.Graphics;
 
+import fls.engine.main.io.DataFile;
+import fls.engine.main.io.FileIO;
 import fls.engine.main.screen.Screen;
 import fls.engine.main.util.Point;
 import fls.engine.main.util.Renderer;
 import uk.fls.h2n0.main.DnD;
 import uk.fls.h2n0.main.characters.Character;
+import uk.fls.h2n0.main.characters.Stats;
 import uk.fls.h2n0.main.characters.classes.ClericRole;
 import uk.fls.h2n0.main.characters.classes.FighterRole;
 import uk.fls.h2n0.main.characters.classes.RougeRole;
@@ -125,7 +128,7 @@ public class CreationScreen extends Screen {
 							this.modStats[i] = 15;
 						}
 						this.inputdelay = 10;
-						calcModPoints();
+						calcModPoints(1);
 					}
 				}else if(min.clicked){
 					this.modStats[i] --;
@@ -133,7 +136,7 @@ public class CreationScreen extends Screen {
 					if(this.modStats[i] < 8){
 						this.modStats[i] = 8;
 					}
-					calcModPoints();
+					calcModPoints(-1);
 				}
 				
 				Button conf = (Button)this.ui.getCompByID("CONF");
@@ -244,22 +247,64 @@ public class CreationScreen extends Screen {
 			}
 			
 			this.ui.add(new Button("CONF", "Confirm", 8 * 9, 8 * 32));
+		}else if(this.step == 4){
+			saveTempFile();
 		}
 		this.inputdelay = 30;
 	}
 	
-	private void calcModPoints(){
+	private boolean calcModPoints(int amt){
 		int reduc = 0;
 		for(int i = 0; i < 6; i++){
-			int p = this.modStats[i] - 8;
-			if(this.modStats[i] == 14){
-				p = 7;
-			}else if(this.modStats[i] == 15){
-				p = 9;
+			int p = this.modStats[i];
+			int o = p - 8;
+			if(p == 14){
+				o = 7;
+			}else if(p == 15){
+				o = 9;
 			}
-			reduc += p;
+			reduc += o;
 		}
 		this.modPoints = 27 - reduc;
+		return true;
+	}
+	
+	/**
+	 * Saves a temporary version of the character in it's current state
+	 */
+	private void saveTempFile(){
+		String state = "State: T";
+		String name = "Name: ?";
+		String fileName = "/chars/temp/temp1";
+		Stats stats = this.chac.getStats();
+		DataFile df = new DataFile(fileName);
+		df.setValue("State", "T");
+		df.setValue("Name", "????");
+		df.setValue("STR", valueToHex(stats.getStrength()));
+		df.setValue("DEX", valueToHex(stats.getDexterity()));
+		df.setValue("WIS", valueToHex(stats.getWisdom()));
+		df.setValue("CON", valueToHex(stats.getConstitution()));
+		df.setValue("INT", valueToHex(stats.getIntelligence()));
+		df.setValue("CHR", valueToHex(stats.getCharisma()));
+	}
+	
+	private String valueToHex(int v){
+		switch(v){
+			default:
+				return ""+v;
+			case 10:
+				return "A";
+			case 11:
+				return "B";
+			case 12:
+				return "C";
+			case 13:
+				return "D";
+			case 14:
+				return "E";
+			case 15:
+				return "F";
+		}			
 	}
 
 }
