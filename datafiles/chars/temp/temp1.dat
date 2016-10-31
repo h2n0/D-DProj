@@ -1,9 +1,10 @@
 Name:????
-STR:16
+STR:A
 State:T
-INT:9
-DEX:16
-WIS:16
-CHR:9
-CON:9
+INT:8
+DEX:8
+WIS:8
+Race:Mountain Dwarf
+CHR:8
+CON:A
 
