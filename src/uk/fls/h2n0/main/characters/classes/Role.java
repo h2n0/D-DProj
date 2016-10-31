@@ -1,6 +1,3 @@
-/**
- * 
- */
 package uk.fls.h2n0.main.characters.classes;
 
 import uk.fls.h2n0.main.characters.stats.StatsModifier.Stat;
@@ -19,6 +16,9 @@ public class Role {
 	protected boolean castsSpells;
 	protected int knownCantribs;
 	
+	/**
+	 * Basic constructor for creating Roles
+	 */
 	public Role(){
 		this.proficencyBonus = 2;
 		this.castsSpells = false;
@@ -26,7 +26,7 @@ public class Role {
 	}
 	
 	/**
-	 * 
+	 * Manages leveling bonuses when it's called from the Stat class
 	 * @param int newLevel
 	 */
 	public void levelUp(int newLevel){
@@ -41,14 +41,26 @@ public class Role {
 		}
 	}
 	
+	/**
+	 * Returns this classes profeciency bonus
+	 * @return Int
+	 */
 	public int getProficencyBonus(){
 		return this.proficencyBonus;
 	}
 	
+	/**
+	 * Returns this classes primary stat
+	 * @return Stat
+	 */
 	public Stat getPrimaryStat(){
 		return this.primaryStat;
 	}
 	
+	/**
+	 * Returns a string to be used with the Dice utility class
+	 * @return String
+	 */
 	public String getHitDie(){
 		return this.hitDice;
 	}
