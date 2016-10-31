@@ -18,6 +18,7 @@ import uk.fls.h2n0.main.characters.race.DwarfRace;
 import uk.fls.h2n0.main.characters.race.ElfRace;
 import uk.fls.h2n0.main.characters.race.HaflingRace;
 import uk.fls.h2n0.main.characters.race.HumanRace;
+import uk.fls.h2n0.main.characters.race.dwarf.MountainDwarfRace;
 import uk.fls.h2n0.main.util.Font;
 import uk.fls.h2n0.main.util.UI;
 import uk.fls.h2n0.main.util.gui.Button;
@@ -286,6 +287,7 @@ public class CreationScreen extends Screen {
 		df.setValue("CON", valueToHex(stats.getConstitution()));
 		df.setValue("INT", valueToHex(stats.getIntelligence()));
 		df.setValue("CHR", valueToHex(stats.getCharisma()));
+		df.setValue("Race", this.chac.getRace().getName());
 	}
 	
 	private String valueToHex(int v){

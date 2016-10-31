@@ -25,6 +25,10 @@ public class Role {
 		this.knownCantribs = 3;
 	}
 	
+	/**
+	 * 
+	 * @param int newLevel
+	 */
 	public void levelUp(int newLevel){
 		if(newLevel == 5 || newLevel == 9 || newLevel == 13 || newLevel == 17){
 			this.proficencyBonus ++;
