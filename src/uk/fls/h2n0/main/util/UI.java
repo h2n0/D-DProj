@@ -15,6 +15,7 @@ public class UI {
 	public UI(Renderer r){
 		this.r = r;
 		this.comps = new ArrayList<UIComponent>();
+		clear();
 	}
 	
 	public Renderer getRenderer(){
@@ -23,12 +24,14 @@ public class UI {
 	
 	public void update(int mx, int my, boolean click){
 		for(UIComponent p : this.comps){
+			if(p.isHidden())continue;
 			p.update(mx, my, click);
 		}
 	}
 	
 	public void render(){
 		for(UIComponent p : this.comps){
+			if(p.isHidden())continue;
 			p.render();
 		}
 	}
@@ -37,6 +40,14 @@ public class UI {
 		if(getCompByID(comp.id) == null){
 			this.comps.add(comp);
 			comp.setManager(this);
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean remove(UIComponent comp){
+		if(getCompByID(comp.id) != null){
+			this.comps.remove(comp);
 			return true;
 		}
 		return false;

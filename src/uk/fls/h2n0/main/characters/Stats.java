@@ -1,5 +1,6 @@
 package uk.fls.h2n0.main.characters;
 
+import fls.engine.main.io.DataFile;
 import uk.fls.h2n0.main.characters.stats.StatsModifier;
 
 public class Stats {
@@ -131,6 +132,10 @@ public class Stats {
 		return this.maxHp;
 	}
 	
+	public int getHp(){
+		return this.hp;
+	}
+	
 	public void dmg(int amt){
 		if(this.hp - amt < 0){
 			this.unconcious = true;
@@ -158,5 +163,14 @@ public class Stats {
 			this.successfulSaves = 0;
 			this.failedSaves = 0;
 		}
+	}
+	
+	public void loadFromFile(DataFile df){
+		this.strength = df.getData("STR").getInt();
+		this.wisdom = df.getData("WIS").getInt();
+		this.dexterity = df.getData("DEX").getInt();
+		this.intelligence = df.getData("INT").getInt();
+		this.consitution = df.getData("CON").getInt();
+		this.charisma = df.getData("CHR").getInt();
 	}
 }

@@ -51,7 +51,7 @@ public class Button extends UIComponent{
 				int dx = this.pos.getIX() + xx;
 				int dy = this.pos.getIY() + yy;
 				
-					rend.setPixel(dx, dy, c);
+				rend.setPixel(dx, dy, c);
 				
 
 				if((yy < h-1 && xx == 0) || (yy == 0 && xx < w -1)){

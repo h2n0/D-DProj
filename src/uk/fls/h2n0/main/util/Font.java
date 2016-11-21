@@ -14,7 +14,7 @@ public class Font {
 
 	public Font() {
 		sp = new SpriteParser(FileIO.instance.readInternalFile("/font.art"));
-		this.letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ+-()";
+		this.letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ+-()!";
 	}
 
 	public void draw(Renderer r, String msg, int x, int y) {

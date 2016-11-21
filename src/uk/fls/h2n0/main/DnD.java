@@ -2,6 +2,8 @@ package uk.fls.h2n0.main;
 
 import fls.engine.main.Init;
 import fls.engine.main.input.Input;
+import fls.engine.main.io.DataFile;
+import uk.fls.h2n0.main.screens.FirstScreen;
 import uk.fls.h2n0.main.screens.TitleScreen;
 
 @SuppressWarnings("serial")
@@ -15,7 +17,15 @@ public class DnD extends Init{
 		super("D&D Compainion", w * s, h * s);
 		useCustomBufferedImage(w, h, false);
 		setInput(new Input(this, Input.MOUSE, Input.KEYS));
-		setScreen(new TitleScreen());
+		
+		DataFile df = new DataFile("options");
+		
+		if(df.getData("NOTE") == null || !df.getData("NOTE").getBool()){
+			df.setValue("NOTE", "true");
+			setScreen(new FirstScreen());
+		}else{
+			setScreen(new TitleScreen());
+		}
 		skipInit();
 	}
 	

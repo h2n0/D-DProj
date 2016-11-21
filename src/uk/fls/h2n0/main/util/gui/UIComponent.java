@@ -11,6 +11,7 @@ public abstract class UIComponent {
 	public String id;
 	protected UI manager;
 	protected Renderer rend;
+	protected boolean hiden;
 	
 	public UIComponent(String id){
 		this.id = id;
@@ -28,5 +29,17 @@ public abstract class UIComponent {
 	public abstract void update(int mx, int my, boolean click);
 	
 	public abstract void render();
+	
+	public boolean isHidden(){
+		return this.hiden;
+	}
+	
+	public void hide(){
+		this.hiden = true;
+	}
+	
+	public void unhide(){
+		this.hiden = false;
+	}
 	
 }

@@ -2,6 +2,7 @@ package uk.fls.h2n0.main.characters;
 
 import uk.fls.h2n0.main.characters.classes.Role;
 import uk.fls.h2n0.main.characters.race.Race;
+import uk.fls.h2n0.main.characters.stats.SkillManager;
 import uk.fls.h2n0.main.characters.stats.StatsModifier;
 import uk.fls.h2n0.main.characters.stats.StatsModifier.Stat;
 import uk.fls.h2n0.main.util.Dice;
@@ -11,19 +12,19 @@ public class Character {
 	private String name;
 	private Race r;
 	private Stats stats;
+	private SkillManager sk;
 	private Role playerClass;
 	
 	public Character(){
 		this.name = "Null Nullson";
 		this.stats = new Stats();
+		this.sk = new SkillManager();
 	}
 	
 	public void setRace(Race r){
-		System.out.println(r.getName());
 		this.r = r;
 		this.stats.wipe();
 		if(r.getMods().isEmpty())return;
-		System.out.println(r.getMods().size());
 		for(StatsModifier sm : r.getMods()){
 			this.stats.addModifier(sm);
 		}
@@ -57,6 +58,10 @@ public class Character {
 	
 	public Stats getStats(){
 		return this.stats;
+	}
+	
+	public SkillManager getSkillManager(){
+		return this.sk;
 	}
 	
 	public String getHitDiceString(){
