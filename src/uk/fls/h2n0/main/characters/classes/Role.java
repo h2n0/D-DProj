@@ -15,6 +15,7 @@ public class Role {
 	
 	protected boolean castsSpells;
 	protected int knownCantribs;
+	protected String name;
 	
 	/**
 	 * Basic constructor for creating Roles
@@ -63,5 +64,9 @@ public class Role {
 	 */
 	public String getHitDie(){
 		return this.hitDice;
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 }

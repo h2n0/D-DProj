@@ -1,0 +1,17 @@
+STR:17
+CLS:Cleric
+HD:1d8
+Race:Mountain Dwarf
+SKL:0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f,0/f
+CON:14
+Name:testing
+FS:1
+SS:2
+MHP:10
+INT:11
+State:C
+DEX:14
+WIS:12
+CHP:10
+CHR:8
+

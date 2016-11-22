@@ -9,11 +9,14 @@ public class Popup extends UIComponent {
 	
 	private boolean acpt, deny;
 	private Button[] btns;
+	private String[] lines;
 	private int w, h, x, y;
 	private int t;
+	private boolean flashFirst;
 	
-	public Popup(String id) {
+	public Popup(String id, boolean flashFirst, String...lines){
 		super(id);
+		this.flashFirst = flashFirst;
 		this.acpt = false;
 		this.deny = false;
 		this.w = 160;
@@ -22,6 +25,11 @@ public class Popup extends UIComponent {
 		this.y = (DnD.h-this.h)/2;
 		int xo = this.w/5;
 		this.btns = new Button[]{new Button("ACP","Okay", this.x + xo, this.y + this.h - 17), new Button("DNY","Nope", this.x + xo * 3, this.y + this.h - 17)};
+		this.lines = lines;
+	}
+	
+	public Popup(String id, String...lines) {
+		this(id, false, lines);
 	}
 
 	@Override
@@ -66,7 +74,6 @@ public class Popup extends UIComponent {
 			b.render();
 		}
 		
-		String[] lines = new String[]{"!! WARNING !!", "", "", "", "You will lose your", "previously saved","character if you", "continue"};
 		int w = this.rend.makeRGB(255, 255, 255);
 		for(int i = 0; i < lines.length; i++){
 			String l = lines[i];

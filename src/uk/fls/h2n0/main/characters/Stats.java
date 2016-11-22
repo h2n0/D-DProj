@@ -48,6 +48,17 @@ public class Stats {
 		return (value - 10) / 2;
 	}
 	
+	public String getBonusString(int value){
+		String res = "";
+		int v = getBonus(value);
+		if(v < 0){
+			res = ""+v;
+		}else if(v >= 0){
+			res = "+"+v;
+		}
+		return res;
+	}
+	
 	public void addModifier(StatsModifier sm){
 		switch(sm.getStat()){
 		case STR:
@@ -124,6 +135,10 @@ public class Stats {
 		this.maxHp = hp;
 	}
 	
+	public void setCurrentHp(int chp){
+		this.hp = chp;
+	}
+	
 	public void setMaxHp(int newMax){
 		this.maxHp = newMax;
 	}
@@ -152,17 +167,27 @@ public class Stats {
 	}
 	
 	public void successfulSave(){
-		if(++this.successfulSaves == 3){
+		this.successfulSaves ++;
+		if(this.successfulSaves == 3){
 			this.successfulSaves = 0;
 			this.failedSaves = 0;
 		}
 	}
 	
 	public void failSave(){
-		if(++this.failedSaves == 3){
+		this.failedSaves ++;
+		if(this.failedSaves == 3){
 			this.successfulSaves = 0;
 			this.failedSaves = 0;
 		}
+	}
+	
+	public int getFailSaves(){
+		return this.failedSaves;
+	}
+	
+	public int getSuccessSaves(){
+		return this.successfulSaves;
 	}
 	
 	public void loadFromFile(DataFile df){

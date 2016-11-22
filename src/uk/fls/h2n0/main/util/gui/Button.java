@@ -43,6 +43,12 @@ public class Button extends UIComponent{
 		this.w *= 8;
 	}
 	
+	/**
+	 * Draws a background with some "fake" highlighting
+	 * @param w
+	 * @param h
+	 * @param c
+	 */
 	private void drawBackground(int w, int h, int c){
 		int high = c << 4;
 		int low = c & 0xCECECE;	

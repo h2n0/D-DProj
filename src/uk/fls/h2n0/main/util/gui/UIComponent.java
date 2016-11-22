@@ -13,10 +13,18 @@ public abstract class UIComponent {
 	protected Renderer rend;
 	protected boolean hiden;
 	
+	/**
+	 * Abstract class for all UI elements so that they all have the same functions for easy
+	 * @param id
+	 */
 	public UIComponent(String id){
 		this.id = id;
 	}
 	
+	/**
+	 * Sets the UI manager so that it can get the renderer and other attributes
+	 * @param ui
+	 */
 	public void setManager(UI ui){
 		this.manager = ui;
 		this.rend = ui.getRenderer();

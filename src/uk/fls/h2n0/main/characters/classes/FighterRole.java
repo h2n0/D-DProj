@@ -5,5 +5,6 @@ public class FighterRole extends Role {
 	public FighterRole(){
 		super();
 		this.hitDice = "d10";
+		this.name = "Fighter";
 	}
 }

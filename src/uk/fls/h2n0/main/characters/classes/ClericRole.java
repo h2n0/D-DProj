@@ -7,5 +7,6 @@ public class ClericRole extends Role {
 		super();
 		this.castsSpells = true;
 		this.hitDice = "d8";
+		this.name = "Cleric";
 	}
 }

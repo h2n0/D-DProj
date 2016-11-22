@@ -6,5 +6,6 @@ public class WizardRole extends Role {
 		super();
 		this.castsSpells = true;
 		this.hitDice = "d6";
+		this.name = "Wizard";
 	}
 }

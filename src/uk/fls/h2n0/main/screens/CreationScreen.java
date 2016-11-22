@@ -47,7 +47,7 @@ public class CreationScreen extends Screen {
 	public CreationScreen(DataFile df, int s) {
 		this.chac = new Character();
 		this.step = s;
-		this.chac.getStats().loadFromFile(df);
+		this.chac.loadFromFile(df);
 	}
 
 	public void postInit() {
@@ -136,7 +136,9 @@ public class CreationScreen extends Screen {
 							this.modStats[i] = 15;
 						}
 						this.inputdelay = 10;
-						calcModPoints(1);
+						if(!calcModPoints(1)){
+							this.modStats[i]--;
+						}
 					}
 				} else if (min.clicked) {
 					this.modStats[i]--;
@@ -144,7 +146,9 @@ public class CreationScreen extends Screen {
 					if (this.modStats[i] < 8) {
 						this.modStats[i] = 8;
 					}
-					calcModPoints(-1);
+					if(!calcModPoints(1)){
+						this.modStats[i]++;
+					}
 				}
 
 				Button conf = (Button) this.ui.getCompByID("CONF");
@@ -214,11 +218,13 @@ public class CreationScreen extends Screen {
 		}
 	}
 
+	//Steps the gui along x paces
 	public void next(int val) {
 		this.step += val;
 		setupStep();
 	}
 
+	//Steps the gui back x paces
 	public void prev(int val) {
 		this.step -= val;
 		if (this.chac.getRace() instanceof HumanRace && this.step == 1) {
@@ -230,8 +236,9 @@ public class CreationScreen extends Screen {
 		setupStep();
 	}
 
+	// Sets up the gui for the current step
 	public void setupStep() {
-		this.ui.clear();
+		this.ui.clear();// Wipes all of the current components in the ui manager
 		if (this.step == 0) {// Chose a race
 			int step = 24;
 			int yo = 80;
@@ -271,6 +278,7 @@ public class CreationScreen extends Screen {
 			int yo = 8 * 8;
 			int step = 8 * 4;
 
+			// Creates the display for increasing and decreasing attribute points [-] ATRIB [+]
 			for (int i = 0; i < 6; i++) {
 				int xx = (DnD.w - (abilitys[i].length() * 7)) / 2;
 				this.ui.add(new Label("LB" + i, abilitys[i] + ":", xx, yo + i * step));
@@ -292,6 +300,7 @@ public class CreationScreen extends Screen {
 		this.inputdelay = 30;
 	}
 
+	//Used to make sure that only 27 points have been spent
 	private boolean calcModPoints(int amt) {
 		int reduc = 0;
 		for (int i = 0; i < 6; i++) {
@@ -304,8 +313,12 @@ public class CreationScreen extends Screen {
 			}
 			reduc += o;
 		}
+		int prev = this.modPoints;
 		this.modPoints = 27 - reduc;
-		return true;
+		if(this.modPoints < 0){
+			this.modPoints = prev;
+			return false;
+		}else return true;
 	}
 
 	/**
@@ -315,33 +328,7 @@ public class CreationScreen extends Screen {
 		String state = "State: " + this.step;
 		String name = "Name: ?";
 		String fileName = "/temp/temp1";
-		Stats stats = this.chac.getStats();
-		DataFile df = new DataFile(fileName);
-		df.setValue("State", "T");
-		df.setValue("Name", "????");
-		df.setValue("STR", "" + stats.getStrength());
-		df.setValue("DEX", "" + stats.getDexterity());
-		df.setValue("WIS", "" + stats.getWisdom());
-		df.setValue("CON", "" + stats.getConstitution());
-		df.setValue("INT", "" + stats.getIntelligence());
-		df.setValue("CHR", "" + stats.getCharisma());
-		df.setValue("Race", this.chac.getRace().getName());
-		df.setValue("MHP", "" + stats.getMaxHp());
-		df.setValue("CHP", "" + stats.getHp());
-
-		// Goes through all the skills in the skill manager and stores them
-		// correctly
-		String skills = "";
-		SkillManager sk = this.chac.getSkillManager();
-		int[] vs = sk.getSkills();
-		boolean[] ps = sk.getProfs();
-
-		for (int i = 0; i < vs.length; i++) {
-			int val = vs[i];
-			boolean prof = ps[i];
-			skills += "" + val + "/" + (prof ? "t" : "f") + ",";
-		}
-		skills = skills.trim().substring(0, skills.length() - 1);
-		df.setValue("SKL", skills);
+		DataFile df = new DataFile(fileName, true);
+		this.chac.save(df);
 	}
 }

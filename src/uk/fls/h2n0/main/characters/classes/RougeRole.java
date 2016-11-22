@@ -5,5 +5,6 @@ public class RougeRole extends Role {
 	public RougeRole(){
 		super();
 		this.hitDice = "d8";
+		this.name = "Rouge";
 	}
 }
